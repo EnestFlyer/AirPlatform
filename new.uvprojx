@@ -540,6 +540,11 @@
               <FileType>1</FileType>
               <FilePath>.\SOFTWARE\StrToNum\StrToNum.c</FilePath>
             </File>
+            <File>
+              <FileName>Sort.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\SOFTWARE\Sort\Sort.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

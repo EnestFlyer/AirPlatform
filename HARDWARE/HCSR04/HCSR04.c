@@ -1,7 +1,7 @@
 #include "../../HARDWARE/HCSR04/HCSR04.h"
 #include "../../SYSTEM/sys/sys.h"
 #include "../../SYSTEM/delay/delay.h"
-
+#include "../../SOFTWARE/Sort/Sort.h"
 
 void HCSR04_Init()
 {
@@ -18,7 +18,7 @@ void HCSR04_Init()
 	TRIG=0;
 }
 
-float HCSR04_GetDistance()
+static float HCSR04_GetDistance()
 {
 	int counter=0;
 	TRIG=1;
@@ -44,10 +44,23 @@ float HCSR04_GetDistance_Average(u8 times)
 	return sum/times;
 }
 
-int HCSR04_GetDistance_Filter(u8 times)
+int HCSR04_GetDistance_Filter()
 {
-
+	u8 i=0;
+	int sum=0;
+	int sample[8];
+	for(i=0;i<8;i++)
+	{
+		sample[i]=HCSR04_GetDistance();
+	}
 	
+	SimpleSelect(sample,8);
+	for(i=0;i<6;i++)
+	{
+		sum=sample[i+1];
+	}
+	
+	return (int)sum/6;
 }
 
 

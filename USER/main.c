@@ -62,7 +62,7 @@ int main(void)
 			if(counter==3)
 			{
 				delay_ms(100);
-				printf1("\"D\":\"%ld\"\r\n",HCSR04_GetDistance_Filter(10));
+				printf1("\"D\":\"%ld\"\r\n",HCSR04_GetDistance_Filter());
 				counter=0;
 			}
 			memset(temp,0,sizeof(u8)*100);

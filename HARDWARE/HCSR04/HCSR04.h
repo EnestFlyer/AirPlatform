@@ -7,7 +7,7 @@
 #define ECHO PAin(1)
 
 void HCSR04_Init(void);
-float HCSR04_GetDistance(void);
-int HCSR04_GetDistance_Filter(u8 times);
+static float HCSR04_GetDistance(void);
+int HCSR04_GetDistance_Filter(void);
 
 #endif
