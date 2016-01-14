@@ -25,7 +25,7 @@ int main(void)
 	HCSR04_Init();
 	while(1)
 	{
-		printf1("\"D\":\"%d\"\r\n",HCSR04_GetDistance_Filter());
+		printf1("\"D\":\"%d\"\r\n",HCSR04_GetDistance());
 		delay_ms(50);
 	}
 	

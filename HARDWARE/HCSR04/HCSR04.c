@@ -49,19 +49,19 @@ int HCSR04_GetDistance_Filter()
 	u8 i=0;
 	int sum=0;
 	int sample[8];
-	for(i=0;i<8;i++)
+	for(i=0;i<6;i++)
 	{
 		sample[i]=HCSR04_GetDistance();
-		delay_ms(20);
+		delay_ms(15);
 	}
 	
-	Bubble_Sort(sample,8);
-	for(i=1;i<5;i++)
+	Bubble_Sort(sample,6);
+	for(i=2;i<4;i++)
 	{
 		sum=sample[i+1]+sum;
 	}
 	
-	return (int)sum/4;
+	return (int)sum/2;
 }
 
 
