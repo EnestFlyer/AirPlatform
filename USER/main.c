@@ -21,12 +21,14 @@ int main(void)
 	delay_init(72);
 	USART1_Init(19200);//与地面站传递命令
 	USART2_Init(115200);//与X86板子传递命令
+	USART3_Init(115200);//调试用
 	HCSR04_Init();
-//	while(1)
-//	{
-//		printf1("\"D\":\"%d\"\r\n",HCSR04_GetDistance_Filter());
-//		delay_ms(50);
-//	}
+	while(1)
+	{
+		printf1("\"D\":\"%d\"\r\n",HCSR04_GetDistance_Filter());
+		delay_ms(50);
+	}
+	
 	while(1)
 	{
 		if(USART_RX2_STA&0x8000)
@@ -39,6 +41,7 @@ int main(void)
 			}
 			flag=1;
 			USART_RX2_STA=0;
+			printf3("%s\r\n",temp);
 		}//接受来自X86的命令
 		
 		
@@ -49,20 +52,20 @@ int main(void)
 			{
 				value=ValueOfMea(temp);
 				printf1("\"S\":\"%ld\"\r\n",value);
-				counter++;
+				//counter++;
 			}  
 			
 			if(mode=='X')
 			{
 				value=ValueOfMea(temp);
 				printf1("\"X\":\"%ld\"\r\n",value);
-				counter++;
+				//counter++;
 			}
 			else if(mode=='Y')
 			{
 				value=ValueOfMea(temp);
 				printf1("\"Y\":\"%ld\"\r\n",value);
-				counter++;
+				//counter++;
 			}
 			if(counter==3)
 			{
