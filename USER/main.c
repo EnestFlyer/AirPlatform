@@ -23,11 +23,11 @@ int main(void)
 	USART2_Init(115200);//与X86板子传递命令
 	USART3_Init(115200);//调试用
 	HCSR04_Init();
-	while(1)
-	{
-		printf1("\"D\":\"%d\"\r\n",HCSR04_GetDistance());
-		delay_ms(50);
-	}
+//	while(1)
+//	{
+//		printf1("\"D\":\"%d\"\r\n",HCSR04_GetDistance());
+//		delay_ms(50);
+//	}
 	
 	while(1)
 	{
