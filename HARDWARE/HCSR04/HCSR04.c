@@ -18,7 +18,7 @@ void HCSR04_Init()
 	TRIG=0;
 }
 
-static float HCSR04_GetDistance()
+int HCSR04_GetDistance()
 {
 	int counter=0;
 	TRIG=1;
@@ -30,7 +30,7 @@ static float HCSR04_GetDistance()
 		delay_us(20);
 		counter++;
 	}
-	return (float)counter*34/100;
+	return (int)counter*34/100;
 }
 
 float HCSR04_GetDistance_Average(u8 times)
@@ -52,12 +52,13 @@ int HCSR04_GetDistance_Filter()
 	for(i=0;i<8;i++)
 	{
 		sample[i]=HCSR04_GetDistance();
+		delay_ms(20);
 	}
 	
 	Bubble_Sort(sample,8);
 	for(i=1;i<5;i++)
 	{
-		sum=sample[i+1];
+		sum=sample[i+1]+sum;
 	}
 	
 	return (int)sum/4;

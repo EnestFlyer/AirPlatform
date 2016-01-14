@@ -22,6 +22,11 @@ int main(void)
 	USART1_Init(19200);//与地面站传递命令
 	USART2_Init(115200);//与X86板子传递命令
 	HCSR04_Init();
+//	while(1)
+//	{
+//		printf1("\"D\":\"%d\"\r\n",HCSR04_GetDistance_Filter());
+//		delay_ms(50);
+//	}
 	while(1)
 	{
 		if(USART_RX2_STA&0x8000)
@@ -45,7 +50,7 @@ int main(void)
 				value=ValueOfMea(temp);
 				printf1("\"S\":\"%ld\"\r\n",value);
 				counter++;
-			}
+			}  
 			
 			if(mode=='X')
 			{
