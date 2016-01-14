@@ -3,9 +3,7 @@
 
 #include "../../SYSTEM/sys/sys.h"
 
-static int Search(int before[],int data,int length);
-static int FindMin(int before[],int head,int length);
-u8 SimpleSelect(int before[],int length);
+void Bubble_Sort(int num[], int n);
 
 #endif
 

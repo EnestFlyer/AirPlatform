@@ -1,54 +1,22 @@
 #include "../../SOFTWARE/Sort/Sort.h"
 #include "../../SYSTEM/sys/sys.h"
 
-static int FindMin(int before[],int head,int length)
+void Bubble_Sort(int num[], int n)
 {
-	int loop=length-head+1;
-	int i=0;
-	int min=before[head];
-	for(i=0;i<loop;i++)
-	{
-		if(min>=before[head])
-		{
-			min=before[head];	
-		}
-		head++;	
-	}
-	return min;
+    int i, j;
+    for(i = 0; i < n; i++)
+    {
+        for(j = 0; i + j < n - 1; j++)
+        {
+            if(num[j] > num[j + 1])
+            {
+                int temp = num[j];
+                num[j] = num[j + 1];
+                num[j + 1] = temp;
+            }
+        }
+    }
+    return;
 }
-
-static int Search(int before[],int data,int length)
-{
-	int i=0;
-	for(i=0;i<length+1;i++)
-	{
-		if(data==before[i])
-		{
-			return i;
-		}
-	}
-}
-
-u8 SimpleSelect(int before[],int length)
-{
-	int i=0;
-	int tmp=0;
-	int min=0;
-	int loc=0;
-	
-	for(i=0;i<length+1;i++)
-	{
-		min=FindMin(before,i+1,length);
-		loc=Search(before,min,length);
-		if(before[i]>=min)
-		{
-			tmp=before[i];
-			before[i]=min;
-			before[loc]=tmp;
-		}
-	}
-	return 1;
-}
-
 
 

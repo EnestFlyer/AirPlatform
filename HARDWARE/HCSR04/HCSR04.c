@@ -54,13 +54,13 @@ int HCSR04_GetDistance_Filter()
 		sample[i]=HCSR04_GetDistance();
 	}
 	
-	SimpleSelect(sample,8);
-	for(i=0;i<6;i++)
+	Bubble_Sort(sample,8);
+	for(i=1;i<5;i++)
 	{
 		sum=sample[i+1];
 	}
 	
-	return (int)sum/6;
+	return (int)sum/4;
 }
 
 
