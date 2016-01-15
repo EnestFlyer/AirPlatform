@@ -28,7 +28,7 @@ int main(void)
 //		printf1("\"D\":\"%d\"\r\n",HCSR04_GetDistance());
 //		delay_ms(50);
 //	}
-	
+//	
 	while(1)
 	{
 		if(USART_RX2_STA&0x8000)
@@ -41,7 +41,7 @@ int main(void)
 			}
 			flag=1;
 			USART_RX2_STA=0;
-			printf3("%s\r\n",temp);
+			//printf3("%s\r\n",temp);
 		}//接受来自X86的命令
 		
 		
@@ -51,26 +51,26 @@ int main(void)
 			if(mode=='S')
 			{
 				value=ValueOfMea(temp);
-				printf1("\"S\":\"%ld\"\r\n",value);
-				//counter++;
+				printf1("\"S\":\"%d\"\r\n",value);
+				counter++;
 			}  
 			
 			if(mode=='X')
 			{
 				value=ValueOfMea(temp);
-				printf1("\"X\":\"%ld\"\r\n",value);
-				//counter++;
-			}
+				printf1("\"X\":\"%d\"\r\n",value);
+				counter++;
+			} 
 			else if(mode=='Y')
 			{
 				value=ValueOfMea(temp);
-				printf1("\"Y\":\"%ld\"\r\n",value);
-				//counter++;
+				printf1("\"Y\":\"%d\"\r\n",value);
+				counter++;
 			}
 			if(counter==3)
 			{
 				delay_ms(100);
-				printf1("\"D\":\"%ld\"\r\n",HCSR04_GetDistance_Filter());
+				printf1("\"D\":\"%d\"\r\n",HCSR04_GetDistance_Filter());
 				counter=0;
 			}
 			memset(temp,0,sizeof(u8)*100);
