@@ -5,6 +5,7 @@
 #include "../../SYSTEM/USART/USART.h"
 #include "../../SOFTWARE/StrToNum/StrToNum.h"
 #include "../../HARDWARE/HCSR04/HCSR04.h"
+#include "../../HARDWARE/OLED/oled.h"
 
 extern u16 USART_RX2_STA;
 
@@ -23,6 +24,11 @@ int main(void)
 	USART2_Init(115200);//与X86板子传递命令
 	USART3_Init(115200);//调试用
 	HCSR04_Init();
+	ResetOLED();
+	OLED_Init();
+	OLED_ShowString(35,20,"READY",24);
+	OLED_Refresh_Gram();
+
 //	while(1)
 //	{
 //		printf1("\"D\":\"%d\"\r\n",HCSR04_GetDistance());
