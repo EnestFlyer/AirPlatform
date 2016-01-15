@@ -18,6 +18,8 @@ int main(void)
 	char mode='O';
 	long value=0;
 	u8 counter=0;
+	char val2str[]="50";
+	
 	
 	delay_init(72);
 	USART1_Init(19200);//与地面站传递命令
@@ -28,11 +30,22 @@ int main(void)
 	OLED_Init();
 	OLED_ShowString(35,20,"READY",24);
 	OLED_Refresh_Gram();
-
+	delay_ms(1000);
+	OLED_Clear();
+	
+	OLED_ShowString(0,0,"Parameters",16);
+	OLED_ShowString(0,16,"X=",12);
+	OLED_ShowString(0,28,"Y=",12);
+  OLED_ShowString(0,40,"S=",12);
+  OLED_ShowString(0,52,"D=",12);
+	OLED_Refresh_Gram();
 //	while(1)
 //	{
-//		printf1("\"D\":\"%d\"\r\n",HCSR04_GetDistance());
-//		delay_ms(50);
+//		//	printf1("\"D\":\"%d\"\r\n",HCSR04_GetDistance());
+//		OLED_ShowNum(20,52,HCSR04_GetDistance(),6,12);
+//		OLED_Refresh_Gram();
+//		delay_ms(1000);
+//		
 //	}
 	
 	while(1)
@@ -58,6 +71,7 @@ int main(void)
 			{
 				value=ValueOfMea(temp);
 				printf1("\"S\":\"%ld\"\r\n",value);
+				OLED_ShowNum(20,40,value,6,12);
 				counter++;
 			}  
 			
@@ -65,20 +79,24 @@ int main(void)
 			{
 				value=ValueOfMea(temp);
 				printf1("\"X\":\"%ld\"\r\n",value);
+				OLED_ShowNum(20,16,value,6,12);
 				counter++;
 			}
 			else if(mode=='Y')
 			{
 				value=ValueOfMea(temp);
 				printf1("\"Y\":\"%ld\"\r\n",value);
+				OLED_ShowNum(20,28,value,6,12);
 				counter++;
 			}
 			if(counter==3)
 			{
 				delay_ms(100);
 				printf1("\"D\":\"%ld\"\r\n",HCSR04_GetDistance_Filter());
+				//OLED_ShowNum(20,52,value,6,12);
 				counter=0;
 			}
+			OLED_Refresh_Gram();
 			memset(temp,0,sizeof(u8)*100);
 			flag=0;
 		}
