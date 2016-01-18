@@ -11,7 +11,9 @@
 //不如地面端去处理电阻数据，直接传递x偏移量和y偏移量即可
 //"X":"X_Value"
 //"Y":"Y_Value"
-
+//"C":"checking value"
+//"S":"Status"
+//"D":"Distance"
 //////////////////////////////////////////////////////////////////
 
 #include "../../SOFTWARE/StrToNum/StrToNum.h"

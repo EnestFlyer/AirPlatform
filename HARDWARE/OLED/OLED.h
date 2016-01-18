@@ -20,6 +20,8 @@
 #define OLED_DATA 1	//写数据
 #define NORL 1 //正常显示
 #define INVER 0 //反白显示
+
+#define KEY PDin(0)
 //OLED控制用函数
 void OLED_WR_Byte(u8 dat,u8 cmd);	    
 void OLED_Display_On(void);
@@ -34,6 +36,7 @@ void OLED_ShowChar(u8 x,u8 y,u8 chr,u8 size,u8 mode);
 void OLED_ShowNum(u8 x,u8 y,u32 num,u8 len,u8 size);
 void OLED_ShowString(u8 x,u8 y,const u8 *p,u8 size);	
 void ResetOLED();
+void Key_Init();
 #endif  
 	 
 

@@ -13,7 +13,7 @@ void HCSR04_Init()
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
 	
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD;   //ÍÆÍìÊä³ö
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD;   
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
 	TRIG=0;
 }

@@ -19,7 +19,9 @@ int main(void)
 	long value=0;
 	u8 counter=0;
 	char val2str[]="50";
+	char SelfCheck='O';
 	
+	/////////////////////以上变量定义///////////////////////////
 	
 	delay_init(72);
 	USART1_Init(19200);//与地面站传递命令
@@ -28,10 +30,59 @@ int main(void)
 	HCSR04_Init();
 	ResetOLED();
 	OLED_Init();
+	Key_Init();
+	///////////////以上初始化///////////////////////
 	OLED_ShowString(35,20,"READY",24);
 	OLED_Refresh_Gram();
 	delay_ms(1000);
 	OLED_Clear();
+	
+	while(KEY==1)
+	{
+		OLED_ShowString(0,0,"Self checking now...",12);
+		OLED_Refresh_Gram();
+		if(USART_RX2_STA&0x8000)
+		{					   
+			len=USART_RX2_STA&0x3fff;//得到此次接收到的数据长度
+			for(t=0;t<len;t++)
+			{
+				temp[t]=Rx2Buf[t];
+				while((USART2->SR&0X40)==0);//等待发送结束
+			}
+			flag=1;
+			USART_RX2_STA=0;
+		}//接受来自X86的命令,用于自检。
+		
+		if(flag==1)
+		{
+			SelfCheck=TempOrPressure(temp);
+				{
+					if(SelfCheck=='C')
+					{
+						value=ValueOfMea(temp);
+						if(value==1)
+						{
+							OLED_ShowString(0,15,"Environment ok",12);
+						}
+						if(value==2)
+						{
+							OLED_ShowString(0,30,"The data chain ok",12);
+						}
+						if(value==0)
+						{
+							OLED_ShowString(0,42,"Checking fail...",12);
+						}
+					}
+					
+				}
+			memset(temp,0,sizeof(u8)*100);
+			flag=0;
+		}
+		OLED_Refresh_Gram();
+	}
+	OLED_Clear();
+	/////////////////////////以上对上位机的自检，按键强制结束//////////////////
+	
 	
 	OLED_ShowString(0,0,"Parameters",16);
 	OLED_ShowString(0,16,"X=",12);
@@ -39,15 +90,9 @@ int main(void)
   OLED_ShowString(0,40,"S=",12);
   OLED_ShowString(0,52,"D=",12);
 	OLED_Refresh_Gram();
-//	while(1)
-//	{
-//		//	printf1("\"D\":\"%d\"\r\n",HCSR04_GetDistance());
-//		OLED_ShowNum(20,52,HCSR04_GetDistance(),6,12);
-//		OLED_Refresh_Gram();
-//		delay_ms(1000);
-//		
-//	}
-	
+	flag=0;//复位flag
+	///////////显示参数////////////////////////////////
+
 	while(1)
 	{
 		if(USART_RX2_STA&0x8000)
