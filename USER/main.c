@@ -73,7 +73,6 @@ int main(void)
 							OLED_ShowString(0,42,"Checking fail...",12);
 						}
 					}
-					
 				}
 			memset(temp,0,sizeof(u8)*100);
 			flag=0;
