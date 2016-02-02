@@ -6,6 +6,8 @@
 #include "../../SOFTWARE/StrToNum/StrToNum.h"
 #include "../../HARDWARE/HCSR04/HCSR04.h"
 #include "../../HARDWARE/OLED/oled.h"
+#include "../../SOFTWARE/TEST_INC/TEST_INC.h"
+#include "../../HARDWARE/E17_TTL500/E17_TTL500.h"
 
 extern u16 USART_RX2_STA;
 
@@ -18,7 +20,7 @@ int main(void)
 	char mode='O';
 	long value=0;
 	u8 counter=0;
-	char val2str[]="50";
+	//char val2str[]="50";
 	char SelfCheck='O';
 	
 	/////////////////////以上变量定义///////////////////////////
@@ -114,7 +116,15 @@ int main(void)
 			if(mode=='S')
 			{
 				value=ValueOfMea(temp);
-				printf1("\"S\":\"%ld\"\r\n",value);
+					{
+						#ifdef __TRANSPARENT_MODE
+							printf1("\"S\":\"%ld\"\r\n",value);
+						#endif
+						
+						#ifdef __COMMAND_MODE
+							E17_SendMsg(CMD_S_PARAM,value);
+						#endif						
+					}
 				OLED_ShowNum(20,40,value,6,12);
 				counter++;
 			}  
@@ -122,21 +132,42 @@ int main(void)
 			if(mode=='X')
 			{
 				value=ValueOfMea(temp);
-				printf1("\"X\":\"%ld\"\r\n",value);
+					{
+						#ifdef __TRANSPARENT_MODE
+							printf1("\"X\":\"%ld\"\r\n",value);
+						#endif
+						#ifdef __COMMAND_MODE
+							E17_SendMsg(CMD_X_PARAM,value);
+						#endif	
+					}
 				OLED_ShowNum(20,16,value,6,12);
 				counter++;
 			}
 			else if(mode=='Y')
 			{
 				value=ValueOfMea(temp);
-				printf1("\"Y\":\"%ld\"\r\n",value);
+					{
+						#ifdef __TRANSPARENT_MODE
+							printf1("\"Y\":\"%ld\"\r\n",value);
+						#endif
+						#ifdef __COMMAND_MODE
+							E17_SendMsg(CMD_Y_PARAM,value);
+						#endif	
+					}
 				OLED_ShowNum(20,28,value,6,12);
 				counter++;
 			}
 			if(counter==3)
 			{
-				delay_ms(100);
-				printf1("\"D\":\"%ld\"\r\n",HCSR04_GetDistance_Filter());
+				delay_ms(50);
+					{
+						#ifdef __TRANSPARENT_MODE
+							printf1("\"D\":\"%ld\"\r\n",HCSR04_GetDistance_Filter());
+						#endif
+						#ifdef __COMMAND_MODE
+							E17_SendMsg(CMD_D_PARAM,value);			
+						#endif	
+					}
 				//OLED_ShowNum(20,52,value,6,12);
 				counter=0;
 			}

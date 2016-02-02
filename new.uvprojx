@@ -515,6 +515,11 @@
               <FileType>1</FileType>
               <FilePath>.\HARDWARE\OLED\OLED.c</FilePath>
             </File>
+            <File>
+              <FileName>E17_TTL500.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\HARDWARE\E17_TTL500\E17_TTL500.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -549,6 +554,11 @@
               <FileName>Sort.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\SOFTWARE\Sort\Sort.c</FilePath>
+            </File>
+            <File>
+              <FileName>TEST_INC.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\SOFTWARE\TEST_INC\TEST_INC.h</FilePath>
             </File>
           </Files>
         </Group>

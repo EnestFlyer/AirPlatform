@@ -185,17 +185,48 @@ void USART3_Init(u32 bound){
 /*******************************************************************
 下面是串口接受中断函数USARTx_IRQHandler(void) 
 *******************************************************************/
+//void USART1_IRQHandler(void)                	//串口1中断服务程序
+//	{
+//	u8 Res;
+//	if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)  //接收中断(接收到的数据必须是0x0d 0x0a结尾)
+//		{
+//		USART_ClearITPendingBit(USART1,USART_IT_RXNE);
+//		Res =USART_ReceiveData(USART1);//(USART1->DR);	//读取接收到的数据
+//					Rx1Buf[Rx1Flag]=Res ;
+//					Rx1Flag++;
+//					if(Rx1Flag>Rx1Length) Rx1Flag=0;				
+//  }								
+//} 
+
+u16 USART_RX1_STA=0; //串口USART 1接受flag
 void USART1_IRQHandler(void)                	//串口1中断服务程序
-	{
+{
 	u8 Res;
 	if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)  //接收中断(接收到的数据必须是0x0d 0x0a结尾)
 		{
-		USART_ClearITPendingBit(USART1,USART_IT_RXNE);
 		Res =USART_ReceiveData(USART1);//(USART1->DR);	//读取接收到的数据
-					Rx1Buf[Rx1Flag]=Res ;
-					Rx1Flag++;
-					if(Rx1Flag>Rx1Length) Rx1Flag=0;				
-  }								
+		
+		if((USART_RX1_STA&0x8000)==0)//接收未完成
+			{
+			if(USART_RX1_STA&0x4000)//接收到了0x0d
+				{
+				if(Res!=0x0a)
+					USART_RX1_STA=0;//接收错误,重新开始
+				else 
+					USART_RX1_STA|=0x8000;	//接收完成了 
+				}
+			else //还没收到0X0D
+				{	
+				if(Res==0x0d)USART_RX1_STA|=0x4000;
+				else
+					{
+					Rx1Buf[USART_RX1_STA&0X3FFF]=Res ;
+					USART_RX1_STA++;
+					if(USART_RX1_STA>(Rx1Length-1))USART_RX1_STA=0;//接收数据错误,重新开始接收	  
+					}		 
+				}
+			}   		 
+     } 
 } 
 	
 ///////////////////////////////////////////////////////////////////////////////
