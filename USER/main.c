@@ -22,6 +22,7 @@ int main(void)
 	u8 counter=0;
 	//char val2str[]="50";
 	char SelfCheck='O';
+	int D_val=0;
 	
 	/////////////////////以上变量定义///////////////////////////
 	
@@ -126,7 +127,7 @@ int main(void)
 						#endif						
 					}
 				OLED_ShowNum(20,40,value,6,12);
-				counter++;
+//				counter++;
 			}  
 			
 			if(mode=='X')
@@ -141,7 +142,7 @@ int main(void)
 						#endif	
 					}
 				OLED_ShowNum(20,16,value,6,12);
-				counter++;
+//				counter++;
 			}
 			else if(mode=='Y')
 			{
@@ -155,22 +156,23 @@ int main(void)
 						#endif	
 					}
 				OLED_ShowNum(20,28,value,6,12);
-				counter++;
+//				counter++;
 			}
-			if(counter==3)
 			{
-				delay_ms(50);
+				  delay_ms(10);//太小在透传情况下可能出问题？
 					{
+						D_val=HCSR04_GetDistance_Filter();
 						#ifdef __TRANSPARENT_MODE
-							printf1("\"D\":\"%ld\"\r\n",HCSR04_GetDistance_Filter());
+							printf1("\"D\":\"%ld\"\r\n",D_val);
 						#endif
+						
 						#ifdef __COMMAND_MODE
 							E17_SendMsg(CMD_D_PARAM,value);			
 						#endif	
 					}
-				//OLED_ShowNum(20,52,value,6,12);
-				counter=0;
-			}
+				OLED_ShowNum(20,52,D_val,6,12);
+//				counter=0;
+			}//去掉了判断，每个周期都要做判断，同时进行距离的pid调控。
 			OLED_Refresh_Gram();
 			memset(temp,0,sizeof(u8)*100);
 			flag=0;
