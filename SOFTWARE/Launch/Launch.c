@@ -31,10 +31,6 @@ void AutoLaunch()
 			USART_RX1_STA=0;
 		}
 		
-		if()
-		{
-		
-		}
 	
 	}
 
