@@ -21,7 +21,7 @@ u8 ResponseDet(char *str)
 	else 
 		return 0;
 }
-
+ 
 u8 E17_SelfTest()//做链路自检用
 {
 	int i=0;
@@ -63,7 +63,7 @@ u8 E17_SelfTest()//做链路自检用
 		memset(temp,0,sizeof(u8)*100);
 		flag=0;
 		delay_ms(1);
-		ErrType=1;//默认是超时错误的，除非ok去除了
+		ErrType=1;//默认是超时错误的，除非ok或者error去除了
 	}//1s没有检测到就强行跳过,置ErrType=1
 	
 	return ErrType;

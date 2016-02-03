@@ -8,6 +8,9 @@
 #include "../../HARDWARE/OLED/oled.h"
 #include "../../SOFTWARE/TEST_INC/TEST_INC.h"
 #include "../../HARDWARE/E17_TTL500/E17_TTL500.h"
+#include "../../SOFTWARE/SelfTest/SelfTest.h"
+#include "./../SOFTWARE/Launch/Launch.h"
+
 
 extern u16 USART_RX2_STA;
 
@@ -23,7 +26,7 @@ int main(void)
 	//char val2str[]="50";
 	char SelfCheck='O';
 	int D_val=0;
-	
+	u8 SelfCheckCounter=0;
 	/////////////////////以上变量定义///////////////////////////
 	
 	delay_init(72);
@@ -39,7 +42,7 @@ int main(void)
 	OLED_Refresh_Gram();
 	delay_ms(1000);
 	OLED_Clear();
-	
+	/////////////////////////////欢迎界面，提示准备工作/////////////////////////////////
 	while(KEY==1)
 	{
 		OLED_ShowString(0,0,"Self checking now...",12);
@@ -66,6 +69,7 @@ int main(void)
 						if(value==1)
 						{
 							OLED_ShowString(0,15,"Environment ok",12);
+							SelfCheckCounter++;
 						}
 						if(value==2)
 						{
@@ -79,12 +83,24 @@ int main(void)
 				}
 			memset(temp,0,sizeof(u8)*100);
 			flag=0;
-		}
+		}//先对开发环境进行自检，在VS下下发ok标志即可。
 		OLED_Refresh_Gram();
+		
+		if(SelfCheckCounter==1)//如果已经通过了开发环境自检
+		{
+			while(KEY==1)//不按强制退出就一直自检，直到成功
+			{
+				if(DataChain_SelfTest()==1)//数据链自检完成
+					break;
+				else
+					continue;
+			}
+			SelfCheckCounter=0;
+			break;//在不按按键强制退出的情况下，只有自检成功了才能退出。
+		}
 	}
 	OLED_Clear();
 	/////////////////////////以上对上位机的自检，按键强制结束//////////////////
-	
 	
 	OLED_ShowString(0,0,"Parameters",16);
 	OLED_ShowString(0,16,"X=",12);
@@ -94,6 +110,8 @@ int main(void)
 	OLED_Refresh_Gram();
 	flag=0;//复位flag
 	///////////显示参数////////////////////////////////
+	AutoLaunch();
+	////////////////////////以上开始起飞/////////////////////////////////
 
 	while(1)
 	{

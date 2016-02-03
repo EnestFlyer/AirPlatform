@@ -560,6 +560,16 @@
               <FileType>5</FileType>
               <FilePath>.\SOFTWARE\TEST_INC\TEST_INC.h</FilePath>
             </File>
+            <File>
+              <FileName>SelfTest.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\SOFTWARE\SelfTest\SelfTest.c</FilePath>
+            </File>
+            <File>
+              <FileName>Launch.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\SOFTWARE\Launch\Launch.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

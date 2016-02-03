@@ -2,7 +2,7 @@
 #define _TEST_H_
 
 #define __TRANSPARENT_MODE
-//#define __COMMAND_MODE
+#define __COMMAND_MODE
 
 
 
