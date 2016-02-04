@@ -6,6 +6,7 @@
 #include "../../SOFTWARE/TEST_INC/TEST_INC.h"
 #include "../../SOFTWARE/StrToNum/StrToNum.h"
 #include "../../HARDWARE/OLED/oled.h"
+#include "string.h"
 
 extern u16 USART_RX1_STA;
 extern u8 Rx1Buf[Rx1Length];
@@ -56,6 +57,9 @@ u8 DataChain_SelfTest()//对数据链的自检，成功返回1
 					break;
 				}
 			}
+			
+			memset(temp,0,sizeof(u8)*100);
+			flag=0;
 		}
 	}
 	

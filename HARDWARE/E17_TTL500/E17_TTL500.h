@@ -9,6 +9,7 @@
 #define CMD_Y_PARAM 2
 #define CMD_S_PARAM 3
 #define CMD_D_PARAM 4
+#define CMD_G_PARAM 5
 
 u8 ResponseDet(char *str);
 u8 E17_SelfTest(void);
