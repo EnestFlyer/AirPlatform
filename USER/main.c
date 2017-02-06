@@ -13,7 +13,7 @@
 
 
 extern u16 USART_RX2_STA;
-// test in c files
+
 int main(void)
 {
 	u8 len=0;
